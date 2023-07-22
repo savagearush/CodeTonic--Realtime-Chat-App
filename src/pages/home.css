@@ -260,6 +260,8 @@
 
 .message .content img {
   border-radius: 5px;
+  width: 200px;
+  object-fit: cover;
 }
 
 .inputs-level1 {

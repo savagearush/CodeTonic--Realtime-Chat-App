@@ -2,7 +2,6 @@ import { useState } from "react";
 import AddImage from "../assets/addImage.png";
 import { auth, db, storage } from "../../firebase.js";
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";

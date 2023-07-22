@@ -10,7 +10,9 @@ import SendIcon from "@mui/icons-material/Send";
 import { ChatContext } from "../context/ChatContext";
 import { AuthContext } from "../context/AuthContext";
 import { arrayUnion, updateDoc, doc, Timestamp } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db, storage } from "../../firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
 import { v4 as uuid } from "uuid";
 import moment from "moment";
 
@@ -20,16 +22,38 @@ const Inputs = () => {
   const { currentUser } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
-    await updateDoc(doc(db, "chats", currentChat.chatId), {
-      messages: arrayUnion({
-        id: uuid(),
-        content,
-        senderId: currentUser.uid,
-        time: moment.now(),
-      }),
-    });
+    const photo = document.getElementById("photo");
+
+    if (photo.files.length !== 0) {
+      const storageRef = ref(storage, currentUser.uid + photo.files[0].name);
+      await uploadBytesResumable(storageRef, photo.files[0]).then(() => {
+        getDownloadURL(storageRef).then(async (downloadURL) => {
+          try {
+            await updateDoc(doc(db, "chats", currentChat.chatId), {
+              messages: arrayUnion({
+                id: uuid(),
+                content,
+                senderId: currentUser.uid,
+                img: downloadURL,
+                time: moment.now(),
+              }),
+            });
+          } catch (err) {}
+        });
+      });
+    } else {
+      await updateDoc(doc(db, "chats", currentChat.chatId), {
+        messages: arrayUnion({
+          id: uuid(),
+          content,
+          senderId: currentUser.uid,
+          time: moment.now(),
+        }),
+      });
+    }
 
     setContent("");
+    photo.value = "";
   };
 
   return (
@@ -38,7 +62,15 @@ const Inputs = () => {
         <FormatBoldIcon />
         <FormatItalicRoundedIcon />
         <StrikethroughSRoundedIcon />
-        <AttachFileRoundedIcon />
+        <input
+          type="file"
+          style={{ display: "none" }}
+          id="photo"
+          placeholder="Password"
+        />
+        <label htmlFor="photo">
+          <AttachFileRoundedIcon />
+        </label>
         <FormatQuoteIcon />
       </div>
       <div className="inputs-level2">

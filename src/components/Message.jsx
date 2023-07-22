@@ -34,7 +34,9 @@ const Message = ({ data }) => {
           {data.content}{" "}
           <div className="msg-time">{moment(data.time.seconds).fromNow()}</div>
         </div>
-        {/* <img src={dog} alt="content-img" className="content-img" /> */}
+        {data.img && (
+          <img src={data.img} alt="content-img" className="content-img" />
+        )}
       </div>
     </div>
   );
