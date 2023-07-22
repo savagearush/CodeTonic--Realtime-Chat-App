@@ -16,7 +16,7 @@ const ProtectedRoute = ({ children }) => {
   if (!currentUser) {
     return <Navigate to="/login" />;
   }
-  
+
   return children;
 };
 
@@ -30,11 +30,11 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/login",
+    path: "login",
     element: <Login />,
   },
   {
-    path: "/register",
+    path: "register",
     element: <Register />,
   },
 ]);
