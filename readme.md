@@ -3,4 +3,4 @@
 [✔️] Login implementation
 [✔️] Search Users
 [✔️] Fetch Chats
-[ ] implement Live chatting
+[✔️] implement Live chatting
