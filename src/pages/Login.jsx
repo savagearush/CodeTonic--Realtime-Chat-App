@@ -1,6 +1,6 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { ChatContext } from "../context/ChatContext.jsx";
 
@@ -40,7 +40,7 @@ const Login = () => {
           </button>
           {error && <p>Email or Password is incorrect !!</p>}
           <p>
-            Don't have an account ? <a href="/register">Sign Up</a>
+            Don't have an account ? <Link to="/register">Sign Up</Link>
           </p>
         </form>
       </div>

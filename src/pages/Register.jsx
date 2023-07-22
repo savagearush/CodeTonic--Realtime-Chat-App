@@ -1,12 +1,9 @@
 import { useState } from "react";
 import AddImage from "../assets/addImage.png";
 import { auth, db, storage } from "../../firebase.js";
-import {
-  createUserWithEmailAndPassword,
-  updateProfile,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const Register = () => {
@@ -83,7 +80,7 @@ const Register = () => {
           </button>
           {err && <p>{err.message}</p>}
           <p>
-            already have an account? <a href="/login">Login</a>
+            already have an account? <Link to="/login">Login</Link>
           </p>
         </form>
       </div>
