@@ -1,0 +1,84 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=League+Spartan:wght@300;400&display=swap");
+
+:root {
+  --app-font: "Inter", sans-serif;
+  --main-bg-Color: #0c134f;
+  --color: #1d267d;
+}
+
+::-webkit-scrollbar {
+  background: transparent;
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(12, 19, 79, 0.2);
+  border-radius: 10px;
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  font-family: var(--app-font);
+}
+
+.formContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--main-bg-Color);
+}
+
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500px;
+  background-color: whitesmoke;
+  border-radius: 5px;
+  padding: 20px 10px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 400px;
+  margin-top: 30px;
+}
+
+input {
+  border: none;
+  width: 100%;
+  padding: 15px;
+  border-bottom: 2px solid var(--color);
+}
+
+input::selection {
+  background-color: var(--color);
+  color: whitesmoke;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.submitBtn {
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+  height: 50px;
+  cursor: pointer;
+  background-color: var(--main-bg-Color);
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: bold;
+  color: whitesmoke;
+}
