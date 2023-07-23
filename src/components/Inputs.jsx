@@ -103,8 +103,7 @@ const Inputs = () => {
       </div>
       <div className="inputs-level3">
         <div>
-          <Picker data={data} onEmojiSelect={console.log} />
-
+          <EmojiEmotionsIcon />
           <AlternateEmailIcon />
         </div>
         <button className="sendBtn" onClick={() => handleSubmit()}>
