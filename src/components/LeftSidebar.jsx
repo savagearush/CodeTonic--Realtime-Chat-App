@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import Search from "../components/Search";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase.js";
 
 const LeftSidebar = () => {
@@ -28,14 +28,20 @@ const LeftSidebar = () => {
   const currentChatElement = useRef();
 
   const handleSelect = (user) => {
-    console.log("Woking");
-
     const combinedId =
       user.uid > currentUser.uid
         ? user.uid + currentUser.uid
         : currentUser.uid + user.uid;
 
     setCurrentChat((prev) => ({ ...prev, chatId: combinedId, user }));
+  };
+
+  const handleSignOut = async () => {
+    signOut(auth);
+    console.log("In Signout", currentUser);
+    await updateDoc(doc(db, "users", currentUser.uid), {
+      onlineStatus: false,
+    });
   };
 
   return (
@@ -47,7 +53,7 @@ const LeftSidebar = () => {
       <div className="users">
         {chats &&
           chats?.map((data) => {
-            const { userInfo } = data[1];
+            const { userInfo, lastMessage } = data[1];
             return (
               <span
                 className="userCard"
@@ -65,7 +71,9 @@ const LeftSidebar = () => {
                   <div className="userName" style={{ fontWeight: "bolder" }}>
                     {userInfo.fullName}
                   </div>
-                  <div className="recentMsg">Thank you</div>
+                  <div className="recentMsg">
+                    {lastMessage ? lastMessage.content : ""}{" "}
+                  </div>
                 </div>
               </span>
             );
@@ -80,7 +88,7 @@ const LeftSidebar = () => {
             className="profilePic"
           />
           <span className="userName">{currentUser.displayName}</span>
-          <button className="signoutBtn" onClick={() => signOut(auth)}>
+          <button className="signoutBtn" onClick={() => handleSignOut()}>
             Sign out
           </button>
         </span>

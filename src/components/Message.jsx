@@ -6,8 +6,6 @@ import { ChatContext } from "../context/ChatContext";
 const Message = ({ data }) => {
   const { currentUser } = useContext(AuthContext);
   const { currentChat } = useContext(ChatContext);
-  console.log(data);
-
   const ref = useRef();
 
   useEffect(() => {
@@ -31,7 +29,7 @@ const Message = ({ data }) => {
       />
       <div className="content">
         <div className="text">
-          {data.content}{" "}
+          {data.content}
           <div className="msg-time">{moment(data.time.seconds).fromNow()}</div>
         </div>
         {data.img && (

@@ -9,12 +9,19 @@ import FormatBoldIcon from "@mui/icons-material/FormatBold";
 import SendIcon from "@mui/icons-material/Send";
 import { ChatContext } from "../context/ChatContext";
 import { AuthContext } from "../context/AuthContext";
-import { arrayUnion, updateDoc, doc, Timestamp } from "firebase/firestore";
+import {
+  arrayUnion,
+  updateDoc,
+  doc,
+  Timestamp,
+  serverTimestamp,
+} from "firebase/firestore";
 import { db, storage } from "../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-
 import { v4 as uuid } from "uuid";
 import moment from "moment";
+import data from "@emoji-mart/data";
+import Picker from "@emoji-mart/react";
 
 const Inputs = () => {
   const [content, setContent] = useState("");
@@ -52,6 +59,20 @@ const Inputs = () => {
       });
     }
 
+    await updateDoc(doc(db, "userChats", currentUser.uid), {
+      [currentChat.chatId + ".lastMessage"]: {
+        content,
+      },
+      [currentChat.chatId + ".date"]: serverTimestamp(),
+    });
+
+    await updateDoc(doc(db, "userChats", currentChat.user.uid), {
+      [currentChat.chatId + ".lastMessage"]: {
+        content,
+      },
+      [currentChat.chatId + ".date"]: serverTimestamp(),
+    });
+
     setContent("");
     photo.value = "";
   };
@@ -82,7 +103,8 @@ const Inputs = () => {
       </div>
       <div className="inputs-level3">
         <div>
-          <EmojiEmotionsIcon />
+          <Picker data={data} onEmojiSelect={console.log} />
+
           <AlternateEmailIcon />
         </div>
         <button className="sendBtn" onClick={() => handleSubmit()}>

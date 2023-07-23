@@ -20,9 +20,8 @@ const Messages = () => {
     };
   }, [currentChat.chatId]);
 
-  console.log(messages);
   return messages?.map((message) => {
-    return <Message data={message} />;
+    return <Message key={message.id} data={message} />;
   });
 };
 

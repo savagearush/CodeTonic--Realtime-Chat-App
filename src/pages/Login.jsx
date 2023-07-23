@@ -3,6 +3,7 @@ import { auth } from "../../firebase.js";
 import { useNavigate, Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { ChatContext } from "../context/ChatContext.jsx";
+import { updateDoc } from "firebase/firestore";
 
 const Login = () => {
   const { setCurrentChat } = useContext(ChatContext);
@@ -16,7 +17,7 @@ const Login = () => {
     const password = e.target[1].value;
 
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then( (userCredential) => {
         const user = userCredential.user;
         setCurrentChat({ chatId: null, user: {} });
         navigate("/");
