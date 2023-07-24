@@ -8,10 +8,9 @@ import { ChatContext } from "../context/ChatContext";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase.js";
 
-const LeftSidebar = () => {
+const LeftSidebar = ({ element }) => {
   const { currentUser } = useContext(AuthContext);
   const { currentChat, setCurrentChat } = useContext(ChatContext);
-
   const [chats, setChats] = useState(false);
 
   useEffect(() => {
@@ -38,7 +37,6 @@ const LeftSidebar = () => {
 
   const handleSignOut = async () => {
     signOut(auth);
-    console.log("In Signout", currentUser);
     await updateDoc(doc(db, "users", currentUser.uid), {
       onlineStatus: false,
     });

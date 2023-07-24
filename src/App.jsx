@@ -24,7 +24,7 @@ function App() {
           <Route
             index
             element={
-              <ProtectedRoute>
+                <ProtectedRoute>
                 <Home />
               </ProtectedRoute>
             }
